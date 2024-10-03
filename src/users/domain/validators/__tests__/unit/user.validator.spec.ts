@@ -1,11 +1,14 @@
 import { userDataBuilder } from "@/users/domain/testing/helper/user-data-builder"
 import { UserRules, UserValidator, UserValidatorFactory } from "../../user.validator"
+import { UserProps } from "@/users/domain/entities/user.entity"
 
 let sut: UserValidator
+let props: UserProps
 
 describe("UserValidator unit tests", () => {
   beforeEach(()=>{
     sut = UserValidatorFactory.create()
+    props = userDataBuilder({})
   })
 
   it('valid case for user validator class',()=>{
@@ -15,127 +18,135 @@ describe("UserValidator unit tests", () => {
     expect(sut.validatedData).toStrictEqual(new UserRules(props))
   })
 
-  describe("name field",()=>{
-    it("Invalidation cases for name field",()=>{
-      let isValid = sut.validate(null as any)
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['name']).toStrictEqual([
-        'name should not be empty',
-        'name must be a string',
-        'name must be shorter than or equal to 255 characters'
-      ])
+  it("Invalidation cases for name field",()=>{
+    let isValid = sut.validate(null as any)
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['name']).toStrictEqual([
+      'name should not be empty',
+      'name must be a string',
+      'name must be shorter than or equal to 255 characters'
+    ])
 
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        name: '' as any,
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['name']).toStrictEqual([
-        'name should not be empty',
-      ])
-
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        name: 10 as any,
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['name']).toStrictEqual([
-        'name must be a string',
-        'name must be shorter than or equal to 255 characters',
-      ])
-
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        name: 'a'.repeat(256),
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['name']).toStrictEqual([
-        'name must be shorter than or equal to 255 characters',
-      ])
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      name: '' as any,
     })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['name']).toStrictEqual([
+      'name should not be empty',
+    ])
+
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      name: 10 as any,
+    })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['name']).toStrictEqual([
+      'name must be a string',
+      'name must be shorter than or equal to 255 characters',
+    ])
+
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      name: 'a'.repeat(256),
+    })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['name']).toStrictEqual([
+      'name must be shorter than or equal to 255 characters',
+    ])
   })
 
-  describe("password field",()=>{
-    it("Invalidation cases for password field",()=>{
-      let isValid = sut.validate(null as any)
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['password']).toStrictEqual([
-        'password should not be empty',
-        'password must be a string',
-        'password must be shorter than or equal to 100 characters'
-      ])
+  it("Invalidation cases for createdAt field",()=>{
+    let isValid = sut.validate({...props,createdAt: 10 as any})
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['createdAt']).toStrictEqual([
+      'createdAt must be a Date instance',
+    ])
 
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        password: '' as any,
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['password']).toStrictEqual([
-        'password should not be empty',
-      ])
-
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        password: 10 as any,
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['password']).toStrictEqual([
-        'password must be a string',
-        'password must be shorter than or equal to 100 characters',
-      ])
-
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        password: 'a'.repeat(256),
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['password']).toStrictEqual([
-        'password must be shorter than or equal to 100 characters',
-      ])
-    })
+    isValid = sut.validate({...props,createdAt: '2023' as any})
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['createdAt']).toStrictEqual([
+      'createdAt must be a Date instance',
+    ])
   })
 
-  describe("email field",()=>{
-    it("Invalidation cases for email field",()=>{
-      let isValid = sut.validate(null as any)
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['email']).toStrictEqual([
-        'email should not be empty',
-        'email must be an email',
-        'email must be a string',
-        'email must be shorter than or equal to 255 characters',
-      ])
+  it("Invalidation cases for password field",()=>{
+    let isValid = sut.validate(null as any)
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['password']).toStrictEqual([
+      'password should not be empty',
+      'password must be a string',
+      'password must be shorter than or equal to 100 characters'
+    ])
 
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        email: '' as any,
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['email']).toStrictEqual([
-        'email should not be empty',
-        'email must be an email',
-      ])
-
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        email: 10 as any,
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['email']).toStrictEqual([
-        'email must be an email',
-        'email must be a string',
-        'email must be shorter than or equal to 255 characters',
-      ])
-
-      isValid = sut.validate({
-        ...userDataBuilder({}),
-        email: 'a'.repeat(256),
-      })
-      expect(isValid).toBeFalsy()
-      expect(sut.errors['email']).toStrictEqual([
-        'email must be an email',
-        'email must be shorter than or equal to 255 characters',
-      ])
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      password: '' as any,
     })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['password']).toStrictEqual([
+      'password should not be empty',
+    ])
+
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      password: 10 as any,
+    })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['password']).toStrictEqual([
+      'password must be a string',
+      'password must be shorter than or equal to 100 characters',
+    ])
+
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      password: 'a'.repeat(256),
+    })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['password']).toStrictEqual([
+      'password must be shorter than or equal to 100 characters',
+    ])
+  })
+
+  it("Invalidation cases for email field",()=>{
+    let isValid = sut.validate(null as any)
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['email']).toStrictEqual([
+      'email should not be empty',
+      'email must be an email',
+      'email must be a string',
+      'email must be shorter than or equal to 255 characters',
+    ])
+
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      email: '' as any,
+    })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['email']).toStrictEqual([
+      'email should not be empty',
+      'email must be an email',
+    ])
+
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      email: 10 as any,
+    })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['email']).toStrictEqual([
+      'email must be an email',
+      'email must be a string',
+      'email must be shorter than or equal to 255 characters',
+    ])
+
+    isValid = sut.validate({
+      ...userDataBuilder({}),
+      email: 'a'.repeat(256),
+    })
+    expect(isValid).toBeFalsy()
+    expect(sut.errors['email']).toStrictEqual([
+      'email must be an email',
+      'email must be shorter than or equal to 255 characters',
+    ])
   })
 })
