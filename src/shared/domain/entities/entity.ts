@@ -11,7 +11,7 @@ export abstract class Entity<Props = any> {
   }
 
   get id(){
-    return this.id
+    return this._id
   }
 
   //required torna obrigatório os parâmetros de entrada
