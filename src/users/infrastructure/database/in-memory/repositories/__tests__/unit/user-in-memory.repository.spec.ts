@@ -59,4 +59,30 @@ describe("UserInMemoryRepository unit tests", () => {
     expect(spyFilter).toHaveBeenCalled()
     expect(itemsFiltered).toStrictEqual([items[0],items[1]])
   })
+
+  it("Should sort by createdAt when sort param is null ", async ()=>{
+    const createdAt = new Date()
+    const items = [
+      new UserEntity(userDataBuilder({name:'Test', createdAt})),
+      new UserEntity(userDataBuilder({name:'TEST', createdAt: new Date(createdAt.getTime() + 1)})),
+      new UserEntity(userDataBuilder({name:'fake', createdAt: new Date(createdAt.getTime() + 2)})),
+    ]
+    const itemsSorted = await sut['applySort'](items,null,null)
+    expect(itemsSorted).toStrictEqual([items[2],items[1],items[0]])
+  })
+
+  it("Should sort by name field", async ()=>{
+    const createdAt = new Date()
+    const items = [
+      new UserEntity(userDataBuilder({name:'c'})),
+      new UserEntity(userDataBuilder({name:'d'})),
+      new UserEntity(userDataBuilder({name:'a'})),
+    ]
+    let itemsSorted = await sut['applySort'](items,'name','asc') //maiúsculos precendem os minúsculos em JS
+    expect(itemsSorted).toStrictEqual([items[2],items[0],items[1]])
+
+    itemsSorted = await sut['applySort'](items,'name',null) //maiúsculos precendem os minúsculos em JS
+    expect(itemsSorted).toStrictEqual([items[1],items[0],items[2]])
+
+  })
 })
