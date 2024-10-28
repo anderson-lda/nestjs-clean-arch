@@ -1,6 +1,6 @@
 import { UserEntity } from "@/users/domain/entities/user.entity"
 import { UserInMemoryRepository } from "../../user-in-memory.repository"
-import { userDataBuilder } from "@/users/domain/testing/helper/user-data-builder"
+import { UserDataBuilder } from "@/users/domain/testing/helper/user-data-builder"
 import { NotFoundError } from "rxjs"
 import { ConflictError } from "@/shared/domain/errors/conflict-error"
 
@@ -18,14 +18,14 @@ describe("UserInMemoryRepository unit tests", () => {
   })
 
   it("Should find an entity by email - findByEmail method", async ()=>{
-    const entity = new UserEntity(userDataBuilder({}))
+    const entity = new UserEntity(UserDataBuilder({}))
     await sut.insert(entity)
     const result = await sut.findByEmail(entity.email)
     expect(entity.toJSON()).toStrictEqual(result.toJSON())
   })
 
   it("Should throw error when not found - emailExists method", async ()=>{
-    const entity = new UserEntity(userDataBuilder({}))
+    const entity = new UserEntity(UserDataBuilder({}))
     await sut.insert(entity)
 
     await expect(sut.emailExists(entity.email))
@@ -39,7 +39,7 @@ describe("UserInMemoryRepository unit tests", () => {
 
 
   it("Should not filter items when filter object is null ", async ()=>{
-    const entity = new UserEntity(userDataBuilder({}))
+    const entity = new UserEntity(UserDataBuilder({}))
     await sut.insert(entity)
     const result = await sut.findAll()
     const spyFilter = jest.spyOn(result,'filter')
@@ -50,9 +50,9 @@ describe("UserInMemoryRepository unit tests", () => {
 
   it("Should filter name field using filter param ", async ()=>{
     const items = [
-      new UserEntity(userDataBuilder({name:'Test'})),
-      new UserEntity(userDataBuilder({name:'TEST'})),
-      new UserEntity(userDataBuilder({name:'fake'})),
+      new UserEntity(UserDataBuilder({name:'Test'})),
+      new UserEntity(UserDataBuilder({name:'TEST'})),
+      new UserEntity(UserDataBuilder({name:'fake'})),
     ]
     const spyFilter = jest.spyOn(items,'filter')
     const itemsFiltered = await sut['applyFilter'](items,'TEST')
@@ -63,9 +63,9 @@ describe("UserInMemoryRepository unit tests", () => {
   it("Should sort by createdAt when sort param is null ", async ()=>{
     const createdAt = new Date()
     const items = [
-      new UserEntity(userDataBuilder({name:'Test', createdAt})),
-      new UserEntity(userDataBuilder({name:'TEST', createdAt: new Date(createdAt.getTime() + 1)})),
-      new UserEntity(userDataBuilder({name:'fake', createdAt: new Date(createdAt.getTime() + 2)})),
+      new UserEntity(UserDataBuilder({name:'Test', createdAt})),
+      new UserEntity(UserDataBuilder({name:'TEST', createdAt: new Date(createdAt.getTime() + 1)})),
+      new UserEntity(UserDataBuilder({name:'fake', createdAt: new Date(createdAt.getTime() + 2)})),
     ]
     const itemsSorted = await sut['applySort'](items,null,null)
     expect(itemsSorted).toStrictEqual([items[2],items[1],items[0]])
@@ -74,9 +74,9 @@ describe("UserInMemoryRepository unit tests", () => {
   it("Should sort by name field", async ()=>{
     const createdAt = new Date()
     const items = [
-      new UserEntity(userDataBuilder({name:'c'})),
-      new UserEntity(userDataBuilder({name:'d'})),
-      new UserEntity(userDataBuilder({name:'a'})),
+      new UserEntity(UserDataBuilder({name:'c'})),
+      new UserEntity(UserDataBuilder({name:'d'})),
+      new UserEntity(UserDataBuilder({name:'a'})),
     ]
     let itemsSorted = await sut['applySort'](items,'name','asc') //maiúsculos precendem os minúsculos em JS
     expect(itemsSorted).toStrictEqual([items[2],items[0],items[1]])

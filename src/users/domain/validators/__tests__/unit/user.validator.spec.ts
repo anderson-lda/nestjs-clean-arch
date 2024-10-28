@@ -1,4 +1,4 @@
-import { userDataBuilder } from "@/users/domain/testing/helper/user-data-builder"
+import { UserDataBuilder } from "@/users/domain/testing/helper/user-data-builder"
 import { UserRules, UserValidator, UserValidatorFactory } from "../../user.validator"
 import { UserProps } from "@/users/domain/entities/user.entity"
 
@@ -8,11 +8,11 @@ let props: UserProps
 describe("UserValidator unit tests", () => {
   beforeEach(()=>{
     sut = UserValidatorFactory.create()
-    props = userDataBuilder({})
+    props = UserDataBuilder({})
   })
 
   it('valid case for user validator class',()=>{
-    const props = userDataBuilder({})
+    const props = UserDataBuilder({})
     const isValid = sut.validate(props)
     expect(isValid).toBeTruthy()
     expect(sut.validatedData).toStrictEqual(new UserRules(props))
@@ -28,7 +28,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       name: '' as any,
     })
     expect(isValid).toBeFalsy()
@@ -37,7 +37,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       name: 10 as any,
     })
     expect(isValid).toBeFalsy()
@@ -47,7 +47,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       name: 'a'.repeat(256),
     })
     expect(isValid).toBeFalsy()
@@ -80,7 +80,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       password: '' as any,
     })
     expect(isValid).toBeFalsy()
@@ -89,7 +89,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       password: 10 as any,
     })
     expect(isValid).toBeFalsy()
@@ -99,7 +99,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       password: 'a'.repeat(256),
     })
     expect(isValid).toBeFalsy()
@@ -119,7 +119,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       email: '' as any,
     })
     expect(isValid).toBeFalsy()
@@ -129,7 +129,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       email: 10 as any,
     })
     expect(isValid).toBeFalsy()
@@ -140,7 +140,7 @@ describe("UserValidator unit tests", () => {
     ])
 
     isValid = sut.validate({
-      ...userDataBuilder({}),
+      ...UserDataBuilder({}),
       email: 'a'.repeat(256),
     })
     expect(isValid).toBeFalsy()

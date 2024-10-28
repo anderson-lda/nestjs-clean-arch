@@ -1,5 +1,5 @@
 import { UserEntity, UserProps } from '../../user.entity'
-import { userDataBuilder } from '@/users/domain/testing/helper/user-data-builder'
+import { UserDataBuilder } from '@/users/domain/testing/helper/user-data-builder'
 
 describe("UserEntity unit tests",() => {
   let props: UserProps
@@ -7,7 +7,7 @@ describe("UserEntity unit tests",() => {
 
   beforeEach(() => {
     UserEntity.validate = jest.fn() //função que não faz nada, usada aqui para criar uma simulação
-    props = userDataBuilder({})
+    props = UserDataBuilder({})
 
     sut = new UserEntity(props)
   })
