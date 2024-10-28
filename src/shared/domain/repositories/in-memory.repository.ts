@@ -1,5 +1,5 @@
-import { Entity } from "../domain/entities/entity";
-import { NotFoundError } from "../domain/errors/not-found-error";
+import { Entity } from "../entities/entity";
+import { NotFoundError } from "../errors/not-found-error";
 import { RepositoryInterface } from "./repository-contracts";
 
 //abstract: não tem uma entidade específica para manipular
