@@ -1,4 +1,4 @@
-import { Entity } from "../domain/entities/entity";
+import { Entity } from "../entities/entity";
 import { InMemoryRepository } from "./in-memory.repository";
 import { SearchableRepositoryInterface, SearchParams, SearchResult } from "./searchable-repository-contracts";
 
