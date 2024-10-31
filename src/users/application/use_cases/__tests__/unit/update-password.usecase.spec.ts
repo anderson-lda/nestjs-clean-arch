@@ -39,7 +39,7 @@ describe('UpdatePasswordUseCase unit tests', () => {
 
   it('should throws an error when old password does not match', async () => {
     const hashPassword = await hashProvider.generateHash('1234')
-    const entity = new UserEntity(UserDataBuilder({password: hashPassword}))
+    const entity = new UserEntity(UserDataBuilder({password: hashPassword})) //é passado o hash pq o databuilder não converte
     repository.items = [entity]
     await expect(()=>sut.execute({id:entity._id, password: '4567', oldPassword: '12345'}))
     .rejects.toThrow(new InvalidPasswordError('old password does not match'))
@@ -48,7 +48,7 @@ describe('UpdatePasswordUseCase unit tests', () => {
   it('should update a password', async () => {
     const hashPassword = await hashProvider.generateHash('1234')
     const spyUpdate = jest.spyOn(repository,'update')
-    const items = [new UserEntity(UserDataBuilder({password: hashPassword}))]
+    const items = [new UserEntity(UserDataBuilder({password: hashPassword}))] //é passado o hash pq o databuilder não converte
     repository.items = items
 
     const result = await sut.execute({id:items[0]._id, password:'4567', oldPassword: '1234'})

@@ -17,7 +17,7 @@ describe('SignupUseCase unit tests', () => {
     sut = new SignupUseCase.UseCase(repository,hashProvider)
   });
 
-  it('should create an user', async () => {
+  it('should create a user', async () => {
     const spyInsert = jest.spyOn(repository,'insert')
     const props = UserDataBuilder({})
     const result = await sut.execute(props)
