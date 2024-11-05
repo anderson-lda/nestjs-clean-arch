@@ -8,6 +8,7 @@ import { UpdateUserUseCase } from '@/users/application/use_cases/update-user.use
 import { UpdateUserDto } from '../../dto/update-user.dto';
 import { UpdatePasswordUseCase } from '@/users/application/use_cases/update-password.usecase';
 import { UpdatePasswordDto } from '../../dto/update-password.dto';
+import { GetUserUseCase } from '@/users/application/use_cases/getuser.usecase';
 
 describe('UsersController unit tests', () => {
   let sut: UsersController;
@@ -101,5 +102,17 @@ describe('UsersController unit tests', () => {
     const result = await sut.remove(id)
     expect(output).toStrictEqual(result);
     expect(mockDeleteUserUseCase.execute).toHaveBeenCalledWith({id})
+  });
+
+  it('should get a user', async () => {
+    const output: GetUserUseCase.Output = props
+    const mockGetUserUseCase = {
+      execute: jest.fn().mockReturnValue(Promise.resolve(output))
+    }
+    sut['getUserUseCase'] = mockGetUserUseCase as any
+
+    const result = await sut.findOne(id)
+    expect(output).toStrictEqual(result);
+    expect(mockGetUserUseCase.execute).toHaveBeenCalledWith({id})
   });
 });
