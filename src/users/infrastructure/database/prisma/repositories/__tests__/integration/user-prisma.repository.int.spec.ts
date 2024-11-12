@@ -6,7 +6,6 @@ import { DatabaseModule } from "@/shared/infrastructure/database/database.module
 import { NotFoundError } from "@/shared/domain/errors/not-found-error"
 import { UserEntity } from "@/users/domain/entities/user.entity"
 import { UserDataBuilder } from "@/users/domain/testing/helper/user-data-builder"
-import exp from "node:constants"
 import { UserRepository } from "@/users/domain/repositories/user.repository"
 
 describe('UserPrismaRepository integration tests',()=>{
@@ -65,7 +64,6 @@ describe('UserPrismaRepository integration tests',()=>{
         entities.push(
           new UserEntity({
             ...element,
-            name: `User${index}`,
             email: `test${index}@mail.com`,
             createdAt: new Date(createdAt.getTime() + index)
           })
@@ -77,6 +75,7 @@ describe('UserPrismaRepository integration tests',()=>{
 
       expect(searchOutput).toBeInstanceOf(UserRepository.SearchResult)
       expect(searchOutput.total).toBe(16)
+      expect(searchOutput.items.length).toBe(15)
       searchOutput.items.forEach(item => {
         expect(item).toBeInstanceOf(UserEntity)
       })
