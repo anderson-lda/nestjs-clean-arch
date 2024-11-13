@@ -30,7 +30,7 @@ describe('UserModelMapper integration tests',()=>{
     await prismaService.$disconnect()
   })
 
-  it('should throws error when user model is invalid',async ()=>{
+  it('should throw error when user model is invalid',async ()=>{
     const model: User = Object.assign(props,{name: null})
 
     expect(()=>UserModelMapper.toEntity(model)).toThrow(ValidationError)

@@ -32,13 +32,13 @@ describe('SigninUseCase unit tests', () => {
     expect(result).toStrictEqual(entity.toJSON())
   });
 
-  it('should throws error when email not provided', async () => {
+  it('should throw error when email not provided', async () => {
     const props = {email:null, password: '1234'}
 
     await expect(()=>sut.execute(props)).rejects.toBeInstanceOf(BadRequestError)
   });
 
-  it('should throws error when password not provided', async () => {
+  it('should throw error when password not provided', async () => {
     const props = {email:'a@a.com', password: null}
 
     await expect(()=>sut.execute(props)).rejects.toBeInstanceOf(BadRequestError)

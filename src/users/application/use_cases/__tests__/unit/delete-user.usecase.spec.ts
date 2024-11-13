@@ -13,7 +13,7 @@ describe('DeleteUserUseCase unit tests', () => {
     sut = new DeleteUserUseCase.UseCase(repository)
   });
 
-  it('should throws an error when the entity is not found', async () => {
+  it('should throw an error when the entity is not found', async () => {
     await expect(()=>sut.execute({id:'fake_id'}))
     .rejects.toThrow(new NotFoundError('entity not found'))
   });

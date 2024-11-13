@@ -33,19 +33,19 @@ describe('SignupUseCase unit tests', () => {
     await expect(()=>sut.execute(props)).rejects.toBeInstanceOf(ConflictError)
   });
 
-  it('should throws error when name not provided', async () => {
+  it('should throw error when name not provided', async () => {
     const props = Object.assign(UserDataBuilder({}),{name:null})
 
     await expect(()=>sut.execute(props)).rejects.toBeInstanceOf(BadRequestError)
   });
 
-  it('should throws error when email not provided', async () => {
+  it('should throw error when email not provided', async () => {
     const props = Object.assign(UserDataBuilder({}),{email:null})
 
     await expect(()=>sut.execute(props)).rejects.toBeInstanceOf(BadRequestError)
   });
 
-  it('should throws error when password not provided', async () => {
+  it('should throw error when password not provided', async () => {
     const props = Object.assign(UserDataBuilder({}),{password:null})
 
     await expect(()=>sut.execute(props)).rejects.toBeInstanceOf(BadRequestError)

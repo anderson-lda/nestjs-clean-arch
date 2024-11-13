@@ -13,7 +13,7 @@ describe('GetUserUseCase unit tests', () => {
     sut = new GetUserUseCase.UseCase(repository)
   });
 
-  it('should throws an error when the entity is not found', async () => {
+  it('should throw an error when the entity is not found', async () => {
     await expect(()=>sut.execute({id:'fake_id'})).rejects.toThrow(new NotFoundError('entity not found'))
   });
 

@@ -14,12 +14,12 @@ describe('UpdateUserUseCase unit tests', () => {
     sut = new UpdateUserUseCase.UseCase(repository)
   });
 
-  it('should throws an error when the entity is not found', async () => {
+  it('should throw an error when the entity is not found', async () => {
     await expect(()=>sut.execute({id:'fake_id', name: 'test_name'}))
     .rejects.toThrow(new NotFoundError('entity not found'))
   });
 
-  it('should throws an error when the name field is empty', async () => {
+  it('should throw an error when the name field is empty', async () => {
     await expect(()=>sut.execute({id:'fake_id', name: ''}))
     .rejects.toThrow(new BadRequestError('name not provided'))
   });

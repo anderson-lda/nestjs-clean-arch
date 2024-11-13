@@ -18,26 +18,26 @@ describe('UpdatePasswordUseCase unit tests', () => {
     sut = new UpdatePasswordUseCase.UseCase(repository,hashProvider)
   });
 
-  it('should throws an error when the entity is not found', async () => {
+  it('should throw an error when the entity is not found', async () => {
     await expect(()=>sut.execute({id:'fake_id', password: 'test_password', oldPassword: 'old_password'}))
     .rejects.toThrow(new NotFoundError('entity not found'))
   });
 
-  it('should throws an error when old password not provided', async () => {
+  it('should throw an error when old password not provided', async () => {
     const entity = new UserEntity(UserDataBuilder({}))
     repository.items = [entity]
     await expect(()=>sut.execute({id:entity._id, password: 'test_password', oldPassword: ''}))
     .rejects.toThrow(new InvalidPasswordError('old password and new password are required'))
   });
 
-  it('should throws an error when password not provided', async () => {
+  it('should throw an error when password not provided', async () => {
     const entity = new UserEntity(UserDataBuilder({password: '1234'}))
     repository.items = [entity]
     await expect(()=>sut.execute({id:entity._id, password: '', oldPassword: '1234'}))
     .rejects.toThrow(new InvalidPasswordError('old password and new password are required'))
   });
 
-  it('should throws an error when old password does not match', async () => {
+  it('should throw an error when old password does not match', async () => {
     const hashPassword = await hashProvider.generateHash('1234')
     const entity = new UserEntity(UserDataBuilder({password: hashPassword})) //é passado o hash pq o databuilder não converte
     repository.items = [entity]
