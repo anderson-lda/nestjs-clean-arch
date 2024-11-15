@@ -70,7 +70,7 @@ describe('UpdatePasswordUseCase integration tests',()=>{
     .toThrow(new InvalidPasswordError('old password and new password are required'))
   })
 
-  it('should a password',async ()=>{
+  it('should update the password',async ()=>{
     const oldPassword = await hashProvider.generateHash('1234')
     const entity = new UserEntity(UserDataBuilder({password: oldPassword}))
     const newUser = await prismaService.user.create({data: entity.toJSON()})
