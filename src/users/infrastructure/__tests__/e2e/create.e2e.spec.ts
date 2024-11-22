@@ -29,7 +29,7 @@ describe('UsersController unit tests', () => {
       ]
     }).compile()
     app = module.createNestApplication()
-    //applyGLobalConfig(app)
+    applyGLobalConfig(app)
     await app.init()
     repository = module.get<UserRepository.Repository>('UserRepository')
   });
@@ -49,12 +49,12 @@ describe('UsersController unit tests', () => {
       const res = await request(app.getHttpServer())
       .post('/users')
       .send(signupDTO).expect(201)
-      expect(Object.keys(res.body)).toStrictEqual(['id','name','email','createdAt'])
+      expect(Object.keys(res.body)).toStrictEqual(['data'])
 
-      const user = await repository.findById(res.body.id)
+      const user = await repository.findById(res.body.data.id)
       const presenter = UsersController.userToResponse(user.toJSON())
       const serialized = instanceToPlain(presenter)
-      expect(res.body).toStrictEqual(serialized)
+      expect(res.body.data).toStrictEqual(serialized)
     });
   });
 })
