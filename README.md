@@ -14,7 +14,8 @@ npm install bcryptjs
 npm install -D @types/bcryptjs
 npm install prisma -D
 npm install @prisma/client
-nest g module shared/infrastructure/database
+nest g module shared/infrastructure/database (no powershell)
 npx prisma generate --schema .\src\shared\infrastructure\database\prisma\schema.prisma
 npm install dotenv-cli
 npx dotenv-cli -e .env.development -- npx prisma migrate dev --schema .\src\shared\infrastructure\database\prisma\schema.prisma
+nest g interceptor shared/infrastructure/interceptors/wrapper-data (no powershell)
