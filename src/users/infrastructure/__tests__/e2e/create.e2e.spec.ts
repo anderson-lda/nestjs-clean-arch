@@ -73,5 +73,50 @@ describe('UsersController unit tests', () => {
         'password must be a string'
       ]) //para arrays e objetos
     });
+
+    it('should return an error with 422 code when the name field is invalid',async () => {
+      delete signupDTO.name
+      const res = await request(app.getHttpServer())
+      .post('/users')
+      .send(signupDTO).expect(422)
+      expect(res.body.error).toBe('Unprocessable Entity') //para tipos primitivos
+      expect(res.body.message).toEqual([
+        'name should not be empty',
+        'name must be a string',
+      ]) //para arrays e objetos
+    });
+
+    it('should return an error with 422 code when the email field is invalid',async () => {
+      delete signupDTO.email
+      const res = await request(app.getHttpServer())
+      .post('/users')
+      .send(signupDTO).expect(422)
+      expect(res.body.error).toBe('Unprocessable Entity') //para tipos primitivos
+      expect(res.body.message).toEqual([
+        'email must be an email',
+        'email should not be empty',
+        'email must be a string',
+      ]) //para arrays e objetos
+    });
+
+    it('should return an error with 422 code when the password field is invalid',async () => {
+      delete signupDTO.password
+      const res = await request(app.getHttpServer())
+      .post('/users')
+      .send(signupDTO).expect(422)
+      expect(res.body.error).toBe('Unprocessable Entity') //para tipos primitivos
+      expect(res.body.message).toEqual([
+        'password should not be empty',
+        'password must be a string'
+      ]) //para arrays e objetos
+    });
+
+    it('should return an error with 422 code with invalid field provided',async () => {
+      const res = await request(app.getHttpServer())
+      .post('/users')
+      .send(Object.assign(signupDTO, {xpto: 'fake'})).expect(422)
+      expect(res.body.error).toBe('Unprocessable Entity')
+      expect(res.body.message).toEqual(['property xpto should not exist'])
+    });
   });
 })
