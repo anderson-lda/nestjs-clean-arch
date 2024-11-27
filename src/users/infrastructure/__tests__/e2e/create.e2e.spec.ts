@@ -132,9 +132,6 @@ describe('UsersController unit tests', () => {
         error: 'Conflict',
         message: 'email address already used'
       })
-      console.log(res.body)
-      //expect(res.body.error).toBe('Unprocessable Entity')
-      //expect(res.body.message).toEqual(['property xpto should not exist'])
     });
   });
 })
