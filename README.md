@@ -19,3 +19,7 @@ npx prisma generate --schema .\src\shared\infrastructure\database\prisma\schema.
 npm install dotenv-cli
 npx dotenv-cli -e .env.development -- npx prisma migrate dev --schema .\src\shared\infrastructure\database\prisma\schema.prisma
 nest g interceptor shared/infrastructure/interceptors/wrapper-data (no powershell)
+nest g filter shared/infrastructure/exception-filters/conflict-error
+
+executando nest no Powershell:
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
