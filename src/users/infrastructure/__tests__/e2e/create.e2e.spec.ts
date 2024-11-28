@@ -14,7 +14,7 @@ import { applyGLobalConfig } from "@/global-config";
 import { UserEntity } from "@/users/domain/entities/user.entity";
 import { UserDataBuilder } from "@/users/domain/testing/helper/user-data-builder";
 
-describe('UsersController unit tests', () => {
+describe('UsersController e2e tests', () => {
   let app: INestApplication
   let module: TestingModule
   let repository: UserRepository.Repository
@@ -63,7 +63,6 @@ describe('UsersController unit tests', () => {
       const res = await request(app.getHttpServer())
       .post('/users')
       .send({}).expect(422)
-      console.log(res.body)
       expect(res.body.error).toBe('Unprocessable Entity') //para tipos primitivos
       expect(res.body.message).toEqual([
         'name should not be empty',
