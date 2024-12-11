@@ -21,6 +21,7 @@ npx dotenv-cli -e .env.development -- npx prisma migrate dev --schema .\src\shar
 nest g interceptor shared/infrastructure/interceptors/wrapper-data (no powershell)
 nest g filter shared/infrastructure/exception-filters/conflict-error
 npm install --save @nestjs/jwt
+nest g module auth/infrastructure/auth
 
 executando nest no Powershell:
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
