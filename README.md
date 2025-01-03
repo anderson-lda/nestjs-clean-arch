@@ -22,6 +22,7 @@ nest g interceptor shared/infrastructure/interceptors/wrapper-data (no powershel
 nest g filter shared/infrastructure/exception-filters/conflict-error
 npm install --save @nestjs/jwt
 nest g module auth/infrastructure/auth
+npm install --save @nestjs/swagger fastify-swagger @fastify/static
 
 executando nest no Powershell:
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
